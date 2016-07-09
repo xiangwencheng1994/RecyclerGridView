@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.View;
@@ -20,7 +21,7 @@ public class RecyclerGridView extends RecyclerView {
     private ItemTouchHelper mItemTouchHelper;
     private int spanCount; // 表格列数
 
-    private GridLayoutManager layoutManager;
+    private LayoutManager layoutManager;
 
     public RecyclerGridView(Context context) {
         this(context, null);
@@ -32,16 +33,23 @@ public class RecyclerGridView extends RecyclerView {
         if (attrs != null)
             spanCount = attrs.getAttributeIntValue("http://schemas.android.com/apk/res/android", "numColumns", 4);
         else spanCount = 4;
-        layoutManager = new GridLayoutManager(context, spanCount);
         this.setHasFixedSize(true);
-        this.setLayoutManager(layoutManager);
         this.setItemAnimator(new DefaultItemAnimator());
     }
 
-    public void setSpanCount(int spanCount) {
-        this.spanCount = spanCount;
-        if (layoutManager != null) layoutManager.setSpanCount(spanCount);
+    public void setLayoutStyle(int style,int spanCount) {
+        if(spanCount > 0) this.spanCount = spanCount;
+        switch (style){
+            case GridStyle:
+                layoutManager = new GridLayoutManager(getContext(), this.spanCount);
+            case StaggeredGridStyle:
+                layoutManager = new StaggeredGridLayoutManager(this.spanCount, StaggeredGridLayoutManager.VERTICAL);
+        }
+        this.setLayoutManager(layoutManager);
     }
+
+    public static final int GridStyle = 1;
+    public static final int StaggeredGridStyle = 2;
 
     public void setLongTouchSortListener(SimpleViewAdapter adapter) {
         adapter.setOnItemLongClickListener(new SimpleViewAdapter.OnItemLongClickListener() {

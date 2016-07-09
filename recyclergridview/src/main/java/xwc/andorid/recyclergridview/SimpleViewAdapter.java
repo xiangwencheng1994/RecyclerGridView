@@ -8,6 +8,7 @@ import java.util.Set;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -32,18 +33,19 @@ public class SimpleViewAdapter extends
         ItemTouchHelperAdapter {
 
     private int layout;
-    private int maskColor = Color.argb( 100, 100, 100,100);
+    private int maskColor = Color.argb(100, 100, 100, 100);
     private Map<String, SimpleViewMatcher> remoteView;
     private List<Map<String, Object>> datas;
     private OnItemClickListener mOnItemClickListener;
     private OnItemLongClickListener mOnItemLongClickListener;
+    private OnItemMoveListener mOnItemMoveListener;
 
     public SimpleViewAdapter(List<Map<String, Object>> datas) {
         if (datas == null) datas = new ArrayList<>();
         this.datas = datas;
     }
 
-    public void setLayout(@LayoutRes int layout, Map<String, SimpleViewMatcher> remoteViews){
+    public void setLayout(@LayoutRes int layout, Map<String, SimpleViewMatcher> remoteViews) {
         this.layout = layout;
         this.remoteView = remoteViews;
     }
@@ -101,12 +103,20 @@ public class SimpleViewAdapter extends
         void onItemLongClick(View view, int position);
     }
 
+    public interface OnItemMoveListener {
+        boolean onItemMove(int fromPosition, int toPosition);
+    }
+
     public void setOnItemClickListener(OnItemClickListener mOnItemClickListener) {
         this.mOnItemClickListener = mOnItemClickListener;
     }
 
     public void setOnItemLongClickListener(OnItemLongClickListener mOnItemLongClickListener) {
         this.mOnItemLongClickListener = mOnItemLongClickListener;
+    }
+
+    public void setOnItemMoveListener(OnItemMoveListener onItemMoveListener) {
+        this.mOnItemMoveListener = onItemMoveListener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements
@@ -116,6 +126,7 @@ public class SimpleViewAdapter extends
 
         AnimatorSet upSet, downSet;
 
+        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         public ViewHolder(View itemView) {
             super(itemView);
             // 创建动画
@@ -126,13 +137,7 @@ public class SimpleViewAdapter extends
             ObjectAnimator upAnim = ObjectAnimator.ofFloat(itemView,
                     "translationZ", 10);
             upSet = new AnimatorSet();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                ObjectAnimator upColor = ObjectAnimator.ofArgb(itemView,
-                        "backgroundColor", maskColor);
-                upSet.playSequentially(scaleXAnim, scaleYAnim, upAnim, upColor);
-            }else{
-                upSet.playSequentially(scaleXAnim, scaleYAnim, upAnim);
-            }
+            upSet.playSequentially(scaleXAnim, scaleYAnim, upAnim);
             upSet.setDuration(100);
             upSet.setInterpolator(new DecelerateInterpolator());
             ObjectAnimator downAnim = ObjectAnimator.ofFloat(itemView,
@@ -142,14 +147,7 @@ public class SimpleViewAdapter extends
             ObjectAnimator scaleYDownAnim = ObjectAnimator.ofFloat(itemView,
                     "scaleY", 1.0f);
             downSet = new AnimatorSet();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                ObjectAnimator downColor = ObjectAnimator.ofArgb(itemView,
-                        "backgroundColor", 0);
-                downSet.playSequentially(scaleXDownAnim, scaleYDownAnim, downAnim,
-                        downColor);
-            }else{
-                downSet.playSequentially(scaleXDownAnim, scaleYDownAnim, downAnim);
-            }
+            downSet.playSequentially(scaleXDownAnim, scaleYDownAnim, downAnim);
             downSet.setDuration(100);
             downSet.setInterpolator(new DecelerateInterpolator());
         }
@@ -169,11 +167,13 @@ public class SimpleViewAdapter extends
                 if (v == null) continue;
                 switch (matcher.getType()) {
                     case SimpleViewMatcher.TEXTVIEW:
-                        ((TextView) v).setText((String)data.get(key));
+                        ((TextView) v).setText((String) data.get(key));
                         break;
                     case SimpleViewMatcher.IMAGEVIEW:
                         Object img = data.get(key);
-                        if (img == null) break;
+                        if (img == null) {
+                            ((ImageView) v).setImageResource(R.drawable.ic_launcher);
+                        }
                         if (img instanceof Integer) {
                             ((ImageView) v).setImageResource((Integer) img);
                         } else if (img instanceof Bitmap) {
@@ -209,6 +209,10 @@ public class SimpleViewAdapter extends
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
+        if (mOnItemMoveListener != null) {
+            if (!mOnItemMoveListener.onItemMove(fromPosition, toPosition))
+                return false;
+        }
         Collections.swap(datas, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
         return true;
@@ -217,6 +221,8 @@ public class SimpleViewAdapter extends
     @Override
     public void onItemDismiss(int position) {
         datas.remove(position);
+
         notifyItemRemoved(position);
     }
+
 }
