@@ -13,7 +13,7 @@ allprojects {
 ```
 ###2.在你要引入的模块中添加dependencies
 ```gradle
-compile 'com.github.xiangwencheng1994:RecyclerGridView:aeeda56b1a'
+compile 'com.github.xiangwencheng1994:RecyclerGridView:1.1'
 ```
 ##简单使用
 ###Step1.布局文件中添加View
