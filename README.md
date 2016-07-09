@@ -1,4 +1,6 @@
 # RecyclerGridView 1.1
+#效果图
+![image](https://github.com/xiangwencheng1994/RecyclerGridView/blob/master/app/demo1.png)
 ##快捷引用
 ###1.在你的项目的build.gradle中添加maven { url "https://jitpack.io" }
 ```gradle
