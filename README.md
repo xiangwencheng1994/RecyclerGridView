@@ -1,4 +1,5 @@
 # RecyclerGridView 1.1
+[![](https://jitpack.io/v/xiangwencheng1994/RecyclerGridView.svg)](https://jitpack.io/#xiangwencheng1994/RecyclerGridView)
 #效果图
 ![image](https://github.com/xiangwencheng1994/RecyclerGridView/blob/master/app/demo1.png)
 ##快捷引用
