@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/RecyclerGridViewDemo.iml" filepath="$PROJECT_DIR$/RecyclerGridViewDemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/recyclergridview/recyclergridview.iml" filepath="$PROJECT_DIR$/recyclergridview/recyclergridview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recyclergridviewdemo/app.iml" filepath="$PROJECT_DIR$/recyclergridviewdemo/app.iml" />
     </modules>
   </component>
 </project>

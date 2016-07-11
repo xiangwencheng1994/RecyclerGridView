@@ -1,1 +1,1 @@
-include ':app', ':recyclergridview'
+include ':recyclergridviewdemo', ':recyclergridview'

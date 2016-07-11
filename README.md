@@ -1,6 +1,8 @@
 # RecyclerGridView 1.1
+#效果图
+![image](https://github.com/xiangwencheng1994/RecyclerGridView/blob/master/screenshots/demo1.png)
 ##快捷引用
-###1.在你的项目的build.gradle中添加maven { url "https://jitpack.io" }
+###1.在你的项目的build.gradle中添加maven { url "https://jitpack.io" } [![](https://jitpack.io/v/xiangwencheng1994/RecyclerGridView.svg)](https://jitpack.io/#xiangwencheng1994/RecyclerGridView)
 ```gradle
 allprojects {
     repositories {
@@ -11,7 +13,7 @@ allprojects {
 ```
 ###2.在你要引入的模块中添加dependencies
 ```gradle
-compile 'com.github.xiangwencheng1994:RecyclerGridView:aeeda56b1a'
+compile 'com.github.xiangwencheng1994:RecyclerGridView:1.1'
 ```
 ##简单使用
 ###Step1.布局文件中添加View
@@ -53,17 +55,17 @@ compile 'com.github.xiangwencheng1994:RecyclerGridView:aeeda56b1a'
         }
 
         //监听项目点击事件
-        adapter.setOnItemClickListener(this);
+        //adapter.setOnItemClickListener(this);
         //监听项目交换
-        adapter.setOnItemMoveListener(this);
+        //adapter.setOnItemMoveListener(this);
         //设置布局样式为GridStyle表格布局，4列
-        recyclerGridView.setLayoutStyle(RecyclerGridView.GridStyle, 4);
+        //recyclerGridView.setLayoutStyle(RecyclerGridView.GridStyle, 4);   //默认
         //设置布局样式为StaggeredGridStyle瀑布流布局，2列
         //recyclerGridView.setLayoutStyle(RecyclerGridView.StaggeredGridStyle, 2);
 
         recyclerGridView.setAdapter(adapter);
         //设置长按拖拽排序
-        recyclerGridView.setLongTouchSortListener(adapter);
+        //recyclerGridView.setLongTouchSortListener(adapter);
 
         adapter.notifyDataSetChanged();
 ```

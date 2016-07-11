@@ -33,6 +33,7 @@ public class RecyclerGridView extends RecyclerView {
         if (attrs != null)
             spanCount = attrs.getAttributeIntValue("http://schemas.android.com/apk/res/android", "numColumns", 4);
         else spanCount = 4;
+        setLayoutStyle(GridStyle, spanCount);
         this.setHasFixedSize(true);
         this.setItemAnimator(new DefaultItemAnimator());
     }
