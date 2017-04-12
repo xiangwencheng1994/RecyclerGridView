@@ -1,8 +1,8 @@
 # RecyclerGridView 1.1
-#效果图
+# 效果图
 ![image](https://github.com/xiangwencheng1994/RecyclerGridView/blob/master/screenshots/demo1.png)
-##快捷引用
-###1.在你的项目的build.gradle中添加maven { url "https://jitpack.io" } [![](https://jitpack.io/v/xiangwencheng1994/RecyclerGridView.svg)](https://jitpack.io/#xiangwencheng1994/RecyclerGridView)
+## 快捷引用
+### 1.在你的项目的build.gradle中添加maven { url "https://jitpack.io" } [![](https://jitpack.io/v/xiangwencheng1994/RecyclerGridView.svg)](https://jitpack.io/#xiangwencheng1994/RecyclerGridView)
 ```gradle
 allprojects {
     repositories {
@@ -11,12 +11,12 @@ allprojects {
     }
 }
 ```
-###2.在你要引入的模块中添加dependencies
+### 2.在你要引入的模块中添加dependencies
 ```gradle
 compile 'com.github.xiangwencheng1994:RecyclerGridView:1.1'
 ```
-##简单使用
-###Step1.布局文件中添加View
+## 简单使用
+### Step1.布局文件中添加View
 ```xml
 <xwc.andorid.recyclergridview.RecyclerGridView
         android:id="@+id/recyclerGridView"
@@ -26,7 +26,7 @@ compile 'com.github.xiangwencheng1994:RecyclerGridView:1.1'
         android:layout_below="@+id/roll_view_pager" >
 </xwc.andorid.recyclergridview.RecyclerGridView>
 ```
-###Step2.初始化控件
+### Step2.初始化控件
 ```java
         //找到View
         RecyclerGridView recyclerGridView = (RecyclerGridView) findViewById(R.id.recyclerGridView);
